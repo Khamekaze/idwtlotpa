@@ -1,15 +1,13 @@
 package com.khamekaze.idontwanttoliveonthisplanetanymore.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
+import com.khamekaze.idontwanttoliveonthisplanetanymore.MainGame;
 import com.khamekaze.idontwanttoliveonthisplanetanymore.game.Game;
 
 public class GameScreen extends Screen {
 	
 	private Game game;
-	
 
 	@Override
 	public void create() {
@@ -19,17 +17,19 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void update() {
-		if(game.getPlayer().getY() > camera.viewportHeight / 2) {
-			camera.translate(0, game.getPlayer().getVelocity());
-			if(camera.position.y < camera.viewportHeight / 2)
-				camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
-			System.out.println("IN THE AIR");
-		} else if(game.getPlayer().getY() <= Gdx.graphics.getHeight() / 2) {
-			camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
-			System.out.println("GROUNDED");
-		}
+//		if(game.getPlayer().getY() > camera.viewportHeight / 2) {
+//			camera.translate(0, game.getPlayer().getVelocity());
+//			if(camera.position.y < camera.viewportHeight / 2)
+//				camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
+//			System.out.println("IN THE AIR");
+//		} else if(game.getPlayer().getY() <= Gdx.graphics.getHeight() / 2) {
+////			camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
+//			System.out.println("GROUNDED");
+//		}
+		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
 		game.update(inputManager);
+		
 	}
 
 	@Override
@@ -38,7 +38,6 @@ public class GameScreen extends Screen {
 		sb.begin();
 		game.render(sb);
 		sb.end();
-		
 	}
 
 	@Override

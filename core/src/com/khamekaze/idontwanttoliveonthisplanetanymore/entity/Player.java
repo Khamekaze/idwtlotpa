@@ -29,8 +29,10 @@ public class Player {
 	}
 	
 	public void update() {
-		y += velocity;
-		shipSprite.setY(y);
+		if(y < MainGame.HEIGHT / 2) {
+			y += velocity;
+			shipSprite.setY(y);
+		}
 	}
 	
 	public void render(SpriteBatch sb) {

@@ -23,7 +23,7 @@ public class Player {
 		shipSprite.setPosition(MainGame.WIDTH / 2 - 34, 120);
 		x = (int) shipSprite.getX();
 		y = (int) shipSprite.getY();
-		startY = (int) shipSprite.getY();
+		startY = 120;
 		width = (int) shipSprite.getWidth();
 		height = (int) shipSprite.getHeight();
 	}
@@ -32,6 +32,8 @@ public class Player {
 		if(y < MainGame.HEIGHT / 2) {
 			y += velocity;
 			shipSprite.setY(y);
+		} else if(velocity >= 350) {
+			shipSprite.setY(MainGame.HEIGHT / 2);
 		}
 	}
 	

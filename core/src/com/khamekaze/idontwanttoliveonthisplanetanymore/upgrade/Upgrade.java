@@ -67,13 +67,13 @@ public class Upgrade {
 		originalValue = value;
 		effect = 0.1f;
 		if(originalValue > 10 && value < 600) {
-			velocityIncrease = value / 200;
+			velocityIncrease = value / 100;
 		} else if(value > 20000 && value < 30000) {
-			velocityIncrease = originalValue / 2000;
+			velocityIncrease = originalValue / 500;
 		} else if(value > 80000 && value < 600000) {
-			velocityIncrease = originalValue / 8000;
+			velocityIncrease = originalValue / 600;
 		} else if(value > 1000000) {
-			velocityIncrease = originalValue / 10000;
+			velocityIncrease = originalValue / 1200;
 		} else {
 			velocityIncrease = 0;
 		}

@@ -18,7 +18,7 @@ public class ScoreManager {
 	private int subVel = 0;
 	private int boostsPerSecond = 0;
 	
-	private BitmapFont udFont, boostsPerSecondFont, cdFont;
+	private BitmapFont udFont, boostsPerSecondFont, cdFont, mpsFont;
 	private GlyphLayout layout;
 	
 	private Game game;
@@ -30,12 +30,15 @@ public class ScoreManager {
 		udFont = new BitmapFont();
 		boostsPerSecondFont = new BitmapFont();
 		cdFont = new BitmapFont();
+		mpsFont = new BitmapFont();
 		cdFont.getData().setScale(2, 2);
 		cdFont.setColor(Color.valueOf("f12e2e"));
 		udFont.getData().setScale(2, 2);
 		udFont.setColor(Color.valueOf("f12e2e"));
 		boostsPerSecondFont.getData().setScale(1.5f, 1.5f);
 		boostsPerSecondFont.setColor(Color.valueOf("f12e2e"));
+		mpsFont.getData().setScale(1.5f, 1.5f);
+		mpsFont.setColor(Color.valueOf("f12e2e"));
 		layout = new GlyphLayout();
 	}
 	
@@ -62,6 +65,8 @@ public class ScoreManager {
 		layout.setText(boostsPerSecondFont, String.valueOf(boostsPerSecond) + "E/s");
 		boostsPerSecondFont.draw(sb, String.valueOf(boostsPerSecond) + "E/s", MainGame.WIDTH - layout.width - 20, MainGame.HEIGHT - 112);
 		cdFont.draw(sb, String.valueOf(currentDistance) + "m", 20, MainGame.HEIGHT - 20);
+		layout.setText(mpsFont, String.valueOf(game.getMetersPerSecond()));
+		mpsFont.draw(sb, String.valueOf((int) game.getMetersPerSecond()) + "M/s", 20, MainGame.HEIGHT - 112);
 	}
 
 	public int getTotalDistance() {

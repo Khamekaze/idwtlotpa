@@ -2,6 +2,7 @@ package com.khamekaze.idontwanttoliveonthisplanetanymore.game;
 
 import java.math.BigInteger;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,11 +23,13 @@ public class Game {
 	private Sprite bgSprite;
 	private ScoreManager scoreManager;
 	private Texture distanceHUDTexture, boostsHUDTexture, hudBgTexture, energyPSTexture;
-	private Sprite distanceHUDSprite, boostsHUDSprite, hudBgSprite, energyPSSprite;
+	private Sprite distanceHUDSprite, boostsHUDSprite, hudBgSprite, energyPSSprite, mPSSprite;
 	private Vector2 origin, shipPos;
 	private BigInteger distance = new BigInteger("0");
 	private BigInteger divider = new BigInteger("100");
 	private int speed = 10;
+	
+	float startDistanceCheck = 0, endDistanceCheck = 0, metersPerSecond = 0, posStart = 0, endPos = 0;
 	
 	private ShapeRenderer renderer;
 	
@@ -67,6 +70,10 @@ public class Game {
 		energyPSSprite.setSize(MainGame.WIDTH / 4 + 50, 50);
 		energyPSSprite.setPosition(MainGame.WIDTH - energyPSSprite.getWidth() , MainGame.HEIGHT - boostsHUDSprite.getHeight() - energyPSSprite.getHeight() + 5);
 		
+		mPSSprite = new Sprite(energyPSTexture);
+		mPSSprite.setSize(MainGame.WIDTH / 4 + 50, 50);
+		mPSSprite.setPosition(0, MainGame.HEIGHT - boostsHUDSprite.getHeight() - mPSSprite.getHeight() + 5);
+		
 		renderer = new ShapeRenderer();
 		upgradesGUI = new UpgradesGUI();
 	}
@@ -87,6 +94,22 @@ public class Game {
 		
 		applyForceFromUpgrades();
 		
+		startDistanceCheck += Gdx.graphics.getDeltaTime();
+		
+		if(startDistanceCheck > 1 && startDistanceCheck < 10) {
+			posStart = shipPos.y - origin.y;
+			startDistanceCheck = 10;
+		}
+		
+		if(startDistanceCheck > 11 && startDistanceCheck < 11.3f) {
+			endPos = shipPos.y - origin.y;
+			metersPerSecond = endPos - posStart;
+			metersPerSecond = metersPerSecond / 100;
+			if(metersPerSecond < 0)
+				metersPerSecond = 0;
+			startDistanceCheck = 0;
+		}
+		
 		
 	}
 	
@@ -95,6 +118,7 @@ public class Game {
 			bgSprite.draw(sb);
 		hudBgSprite.draw(sb);
 		distanceHUDSprite.draw(sb);
+		mPSSprite.draw(sb);
 		energyPSSprite.draw(sb);
 		boostsHUDSprite.draw(sb);
 		
@@ -196,6 +220,10 @@ public class Game {
 	
 	public ScoreManager getScoreManager() {
 		return scoreManager;
+	}
+	
+	public float getMetersPerSecond() {
+		return metersPerSecond;
 	}
 
 }

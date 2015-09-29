@@ -2,12 +2,11 @@ package com.khamekaze.idontwanttoliveonthisplanetanymore.game;
 
 import java.math.BigInteger;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.khamekaze.idontwanttoliveonthisplanetanymore.MainGame;
 import com.khamekaze.idontwanttoliveonthisplanetanymore.entity.Player;
@@ -22,6 +21,8 @@ public class Game {
 	private Texture bg;
 	private Sprite bgSprite;
 	private ScoreManager scoreManager;
+	private Texture distanceHUDTexture, boostsHUDTexture, hudBgTexture, energyPSTexture;
+	private Sprite distanceHUDSprite, boostsHUDSprite, hudBgSprite, energyPSSprite;
 	private Vector2 origin, shipPos;
 	private BigInteger distance = new BigInteger("0");
 	private BigInteger divider = new BigInteger("100");
@@ -36,11 +37,35 @@ public class Game {
 		player = new Player();
 		bg = new Texture("bg.png");
 		bgSprite = new Sprite(bg);
-		bgSprite.setSize(bg.getWidth(), bg.getHeight());
+		bgSprite.setSize(MainGame.WIDTH, bg.getHeight());
 		bgSprite.setPosition(0, 0);
 		scoreManager = new ScoreManager(this);
 		shipPos = new Vector2();
 		origin = new Vector2();
+		
+		distanceHUDTexture = new Texture("distanceHUD.png");
+		distanceHUDSprite = new Sprite(distanceHUDTexture);
+		
+		distanceHUDSprite.setSize(MainGame.WIDTH / 2, 100);
+		distanceHUDSprite.setPosition(0, MainGame.HEIGHT - 100);
+		
+		hudBgTexture = new Texture("hudbg.png");
+		hudBgSprite = new Sprite(hudBgTexture);
+		
+		hudBgSprite.setSize(MainGame.WIDTH, 127);
+		hudBgSprite.setPosition(0, MainGame.HEIGHT - 127);
+		
+		boostsHUDTexture = new Texture("boostsHUD.png");
+		boostsHUDSprite = new Sprite(boostsHUDTexture);
+		
+		boostsHUDSprite.setSize(MainGame.WIDTH / 2, 100);
+		boostsHUDSprite.setPosition(MainGame.WIDTH / 2, MainGame.HEIGHT - 100);
+		
+		energyPSTexture = new Texture("energyps.png");
+		energyPSSprite = new Sprite(energyPSTexture);
+		
+		energyPSSprite.setSize(MainGame.WIDTH / 4 + 50, 50);
+		energyPSSprite.setPosition(MainGame.WIDTH - energyPSSprite.getWidth() , MainGame.HEIGHT - boostsHUDSprite.getHeight() - energyPSSprite.getHeight() + 5);
 		
 		renderer = new ShapeRenderer();
 		upgradesGUI = new UpgradesGUI();
@@ -61,11 +86,18 @@ public class Game {
 		scoreManager.update();
 		
 		applyForceFromUpgrades();
+		
+		
 	}
 	
 	public void render(SpriteBatch sb) {
 		if(bgSprite.getY() > -bgSprite.getHeight() - 50)
 			bgSprite.draw(sb);
+		hudBgSprite.draw(sb);
+		distanceHUDSprite.draw(sb);
+		energyPSSprite.draw(sb);
+		boostsHUDSprite.draw(sb);
+		
 		player.render(sb);
 		scoreManager.render(sb);
 		upgradesGUI.render(sb);
@@ -148,6 +180,10 @@ public class Game {
 			bgSprite.setY(0);
 			player.setVelocity(-1);
 		}
+	}
+	
+	public UpgradesGUI getUpgradesGUI() {
+		return upgradesGUI;
 	}
 	
 	public Sprite getBackground() {

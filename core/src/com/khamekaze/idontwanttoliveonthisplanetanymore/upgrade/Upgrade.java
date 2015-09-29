@@ -38,7 +38,15 @@ public class Upgrade {
 		effect = 0.1f;
 		if(originalValue > 10) {
 			velocityIncrease = originalValue / 100;
+		} else if(originalValue > 1000) {
+			velocityIncrease = originalValue / 1000;
+		} else if(originalValue > 10000) {
+			velocityIncrease = originalValue / 5000;
+		} else if(originalValue > 1000000) {
+			velocityIncrease = originalValue / 10000;
 		}
+		
+//		System.out.println("VEL: " + velocityIncrease);
 		increase = new Button("increase");
 		decrease = new Button("decrease");
 		increase.setSize(50, 50);
@@ -58,9 +66,18 @@ public class Upgrade {
 		sellValue = value / 2;
 		originalValue = value;
 		effect = 0.1f;
-		if(originalValue > 10) {
-			velocityIncrease = originalValue / 100;
+		if(originalValue > 10 && value < 600) {
+			velocityIncrease = value / 200;
+		} else if(value > 20000 && value < 30000) {
+			velocityIncrease = originalValue / 2000;
+		} else if(value > 80000 && value < 600000) {
+			velocityIncrease = originalValue / 8000;
+		} else if(value > 1000000) {
+			velocityIncrease = originalValue / 10000;
+		} else {
+			velocityIncrease = 0;
 		}
+		System.out.println("VEL: " + velocityIncrease);
 		increase = new Button("increase");
 		decrease = new Button("decrease");
 		increase.setSize(50, 50);
@@ -70,7 +87,6 @@ public class Upgrade {
 		font = new BitmapFont();
 		font.setColor(0, 0, 0, 1);
 		layout = new GlyphLayout();
-		System.out.println(velocityIncrease);
 	}
 	
 	public void update() {

@@ -27,38 +27,6 @@ public class Upgrade {
 	private boolean excecuteEffect = false;
 	private GlyphLayout layout;
 	
-	public Upgrade(String name, int value) {
-		texture = new Texture(name + ".png");
-		sprite = new Sprite(texture);
-		bgTexture = new Texture("upgradeContainer.png");
-		background = new Sprite(bgTexture);
-		this.value = value;
-		sellValue = value / 2;
-		originalValue = value;
-		effect = 0.1f;
-		if(originalValue > 10) {
-			velocityIncrease = originalValue / 100;
-		} else if(originalValue > 1000) {
-			velocityIncrease = originalValue / 1000;
-		} else if(originalValue > 10000) {
-			velocityIncrease = originalValue / 5000;
-		} else if(originalValue > 1000000) {
-			velocityIncrease = originalValue / 10000;
-		}
-		
-//		System.out.println("VEL: " + velocityIncrease);
-		increase = new Button("increase");
-		decrease = new Button("decrease");
-		increase.setSize(50, 50);
-		decrease.setSize(50, 50);
-		width = (int) background.getWidth();
-		height = (int) background.getHeight();
-		font = new BitmapFont();
-		font.setColor(0, 0, 0, 1);
-		layout = new GlyphLayout();
-		System.out.println(velocityIncrease);
-	}
-	
 	public Upgrade(int value) {
 		bgTexture = new Texture("upgradeContainer.png");
 		background = new Sprite(bgTexture);

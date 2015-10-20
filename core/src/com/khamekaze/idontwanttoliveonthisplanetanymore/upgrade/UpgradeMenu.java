@@ -10,10 +10,10 @@ public class UpgradeMenu {
 	
 	private Upgrade upgradeOne, upgradeTwo, upgradeThree, upgradeFour, upgradeFive;
 	private Array<Upgrade> upgrades;
-	private boolean isOpen = false;
+	private boolean isOpen = false, renderEnergyPerSec = false;
 	private Rectangle menuContainer;
 	
-	private float delay = 2f;
+	private float delay = 1.0f;
 	private float gettingDelta = 0f;
 	private boolean excecuteEffect = false;
 	
@@ -32,9 +32,9 @@ public class UpgradeMenu {
 		upgradeThree = new Upgrade(25000);
 		upgradeThree.setDistancePerExcecution(15);
 		upgradeFour = new Upgrade(500000);
-		upgradeFour.setDistancePerExcecution(100);
-		upgradeFive = new Upgrade(2000000);
-		upgradeFive.setDistancePerExcecution(1000);
+		upgradeFour.setDistancePerExcecution(400);
+		upgradeFive = new Upgrade(10000000);
+		upgradeFive.setDistancePerExcecution(16000);
 		
 		upgrades.add(upgradeOne);
 		upgrades.add(upgradeTwo);
@@ -75,8 +75,6 @@ public class UpgradeMenu {
 			}
 			
 			if(u.getAmount() > 0) {
-				delay = 2.0f;
-				delay = delay - currentEffect;
 				for(int i = 0; i < u.getAmount(); i++) {
 					totalAmountOfUpgrades++;
 					distancePerEx += u.getDistancePerExcecution();
@@ -85,16 +83,12 @@ public class UpgradeMenu {
 			}
 		}
 		
-		if(delay <= 0.1f) {
-			delay = 0.1f;
-		}
-		
 		if(gettingDelta >= delay && currentEffect > 0) {
-//			System.out.println(totalSpeedFromUpgrades);
 			gettingDelta = 0;
 			excecuteEffect = true;
+			totalDistanceFromUpgrades = distancePerEx;
+			renderEnergyPerSec = true;
 		}
-		totalDistanceFromUpgrades = distancePerEx;
 		
 	}
 	
@@ -123,6 +117,14 @@ public class UpgradeMenu {
 				
 			}
 		}
+	}
+	
+	public boolean getRenderEnergyPerSec() {
+		return renderEnergyPerSec;
+	}
+	
+	public void setRenderEnergyPerSec(boolean render) {
+		this.renderEnergyPerSec = render;
 	}
 	
 	public float getDelay() {

@@ -22,8 +22,8 @@ public class Game {
 	private Texture bg;
 	private Sprite bgSprite;
 	private ScoreManager scoreManager;
-	private Texture distanceHUDTexture, boostsHUDTexture, hudBgTexture, energyPSTexture;
-	private Sprite distanceHUDSprite, boostsHUDSprite, hudBgSprite, energyPSSprite, mPSSprite;
+	private Texture distanceHUDTexture, boostsHUDTexture, hudBgTexture, energyPSTexture, hudDistance;
+	private Sprite distanceHUDSprite, boostsHUDSprite, hudBgSprite, energyPSSprite, mPSSprite, hudDistanceSprite;
 	private Vector2 origin, shipPos;
 	private BigInteger distance = new BigInteger("0");
 	private BigInteger divider = new BigInteger("100");
@@ -46,33 +46,15 @@ public class Game {
 		shipPos = new Vector2();
 		origin = new Vector2();
 		
-		distanceHUDTexture = new Texture("distanceHUD.png");
-		distanceHUDSprite = new Sprite(distanceHUDTexture);
+		hudDistance = new Texture("hudDistance.png");
+		hudDistanceSprite = new Sprite(hudDistance);
+		hudDistanceSprite.setSize(250, 250);
+		hudDistanceSprite.setPosition(-25, MainGame.HEIGHT - 175);
 		
-		distanceHUDSprite.setSize(MainGame.WIDTH / 2, 100);
-		distanceHUDSprite.setPosition(0, MainGame.HEIGHT - 100);
-		
-		hudBgTexture = new Texture("hudbg.png");
-		hudBgSprite = new Sprite(hudBgTexture);
-		
-		hudBgSprite.setSize(MainGame.WIDTH, 127);
-		hudBgSprite.setPosition(0, MainGame.HEIGHT - 127);
-		
-		boostsHUDTexture = new Texture("boostsHUD.png");
-		boostsHUDSprite = new Sprite(boostsHUDTexture);
-		
-		boostsHUDSprite.setSize(MainGame.WIDTH / 2, 100);
-		boostsHUDSprite.setPosition(MainGame.WIDTH / 2, MainGame.HEIGHT - 100);
-		
-		energyPSTexture = new Texture("energyps.png");
+		energyPSTexture = new Texture("hudDistance.png");
 		energyPSSprite = new Sprite(energyPSTexture);
-		
-		energyPSSprite.setSize(MainGame.WIDTH / 4 + 50, 50);
-		energyPSSprite.setPosition(MainGame.WIDTH - energyPSSprite.getWidth() , MainGame.HEIGHT - boostsHUDSprite.getHeight() - energyPSSprite.getHeight() + 5);
-		
-		mPSSprite = new Sprite(energyPSTexture);
-		mPSSprite.setSize(MainGame.WIDTH / 4 + 50, 50);
-		mPSSprite.setPosition(0, MainGame.HEIGHT - boostsHUDSprite.getHeight() - mPSSprite.getHeight() + 5);
+		energyPSSprite.setSize(180, 180);
+		energyPSSprite.setPosition(-25, MainGame.HEIGHT - hudDistanceSprite.getHeight() - 30);
 		
 		renderer = new ShapeRenderer();
 		upgradesGUI = new UpgradesGUI();
@@ -116,11 +98,14 @@ public class Game {
 	public void render(SpriteBatch sb) {
 		if(bgSprite.getY() > -bgSprite.getHeight() - 50)
 			bgSprite.draw(sb);
-		hudBgSprite.draw(sb);
-		distanceHUDSprite.draw(sb);
-		mPSSprite.draw(sb);
+//		hudBgSprite.draw(sb);
+//		mPSSprite.draw(sb);
+//		distanceHUDSprite.draw(sb);
+		
 		energyPSSprite.draw(sb);
-		boostsHUDSprite.draw(sb);
+//		boostsHUDSprite.draw(sb);
+		
+		hudDistanceSprite.draw(sb);
 		
 		player.render(sb);
 		scoreManager.render(sb);
@@ -165,10 +150,10 @@ public class Game {
 			if(upgradesGUI.getUpgradeMenu().getExcecuteEffect()) {
 				scoreManager.setUnusedDistance(scoreManager.getUnusedDistance() + upgradesGUI.getUpgradeMenu().getTotalDistanceFromUpgrades());
 				scoreManager.setTotalDistance(scoreManager.getTotalDistance() + upgradesGUI.getUpgradeMenu().getTotalDistanceFromUpgrades());
-				if(player.getGrounded())
+				if(player.getGrounded() && upgradesGUI.getUpgradeMenu().getVelocityFromUpgrades() > 0)
 					player.setY(player.getStartY() + 1);
 				player.setGrounded(false);
-				player.setVelocity(speed + (int) upgradesGUI.getUpgradeMenu().getVelocityFromUpgrades());
+				player.setVelocity((int) upgradesGUI.getUpgradeMenu().getVelocityFromUpgrades());
 				if(player.getY() > MainGame.HEIGHT / 2) {
 					player.setY(MainGame.HEIGHT / 2);
 				}

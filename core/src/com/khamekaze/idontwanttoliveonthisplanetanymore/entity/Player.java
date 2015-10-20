@@ -32,8 +32,8 @@ public class Player {
 	
 	public Player() {
 		shipSprite = new Sprite(shipTexture);
-		shipSprite.setSize(100, 120);
-		shipSprite.setPosition(MainGame.WIDTH / 2 - 50, 120);
+		shipSprite.setSize(140, 170);
+		shipSprite.setPosition(MainGame.WIDTH / 2 - 70, 120);
 		x = (int) shipSprite.getX();
 		y = (int) shipSprite.getY();
 		startY = 120;
@@ -65,7 +65,7 @@ public class Player {
 	
 	public void update() {
 		
-		shipSprite.setX(MainGame.WIDTH / 2 - 50);
+		shipSprite.setX(MainGame.WIDTH / 2 - 70);
 		
 		int changeX = rand.nextInt(4) - 2;
 		int changeY = rand.nextInt(8) - 4;
@@ -90,14 +90,14 @@ public class Player {
 				}
 			}
 		} else {
-			shipSprite.setX(MainGame.WIDTH / 2 - 50);
+			shipSprite.setX(MainGame.WIDTH / 2 - 70);
 			boosting = false;
 		}
 	}
 	
 	public void render(SpriteBatch sb) {
 		if(boosting) {
-			sb.draw(boosterAnim.getKeyFrame(time += Gdx.graphics.getDeltaTime()), shipSprite.getX() + 25, shipSprite.getY() - 50, 50, 50);
+			sb.draw(boosterAnim.getKeyFrame(time += Gdx.graphics.getDeltaTime()), shipSprite.getX() + 40, shipSprite.getY() - 45, 60, 70);
 		}
 		shipSprite.draw(sb);
 	}
